@@ -48,14 +48,26 @@ class TrackList {
 
   sortPricing() {
     // TODO: Create a Methode to sort by pricing
-    const sortedData = this.data.sort((a, b) => {
-      if (a.trackPrice < b.trackPrice) {
-        return -1;
-      } else {
-        return 1;
-      }
+    let mapped = this.data.map((track, index) => {
+      return { index: index, value: track.price };
     });
-    return sortedData;
+    mapped.sort((a, b) => {
+      if (a.value > b.value) {
+        return 1;
+      } else if (a.value < b.value) {
+        return -1;
+      }
+      return 0;
+    });
+    const sortedTracks = mapped.map(tracknr => this.data[tracknr]);
+    // const sortedData = this.data.sort((a, b) => {
+    //   if (a.trackPrice < b.trackPrice) {
+    //     return -1;
+    //   } else {
+    //     return 1;
+    //   }
+    // });
+    return sortedTracks;
   }
 
   render() {
