@@ -116,3 +116,7 @@ document.querySelector("#togglesort").addEventListener("input", () => {
       myTrackList.modViewData(myTrackList.data);
   }
 });
+document.querySelector("#filter").addEventListener("input", () => {
+  filterValue = document.querySelector("#search").value;
+  showTable(filterValue);
+});
