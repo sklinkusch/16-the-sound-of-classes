@@ -11,6 +11,10 @@ body {
   display: flex;
   flex-direction: row;
 }
+.row:hover {
+  background-color: #ccc;
+  color: black;
+}
 
 .row > * {
   flex: 1;
