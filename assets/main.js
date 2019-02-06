@@ -12,6 +12,7 @@ class TrackList {
 
     // Show stuff
     this.render();
+    this.modViewData(this.sortPricing());
   }
 
   modViewData(newData) {
@@ -41,6 +42,16 @@ class TrackList {
 
   sortPricing() {
     // TODO: Create a Methode to sort by pricing
+    const sortedData = this.data.sort((a, b) => {
+      if (a.trackPrice < b.trackPrice) {
+        return -1;
+      } else if (a.trackPrice === b.trackPrice) {
+        return 0;
+      } else {
+        return 1;
+      }
+    });
+    return sortedData;
   }
 
   render() {
