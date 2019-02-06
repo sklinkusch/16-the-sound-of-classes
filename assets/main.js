@@ -46,14 +46,33 @@ class TrackList {
     return htmlString;
   }
 
-  sortAlphabet() {}
+  sortAlphabet(property) {
+    let mapped = music.map((track, index) => {
+      return { index: index, value: track[property] };
+    });
+    console.log(property);
+    let nameA, nameB;
+    mapped.sort((a, b) => {
+      nameA = a.value.toUpperCase();
+      nameB = b.value.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      } else if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+    const sortedTracks = mapped.map(tracknr => {
+      return music[tracknr.index];
+    });
+    return sortedTracks;
+  }
 
   sortPricing(direction) {
     // TODO: Create a Methode to sort by pricing
     let mapped = music.map((track, index) => {
       return { index: index, value: track.trackPrice };
     });
-    let val;
     mapped.sort((a, b) => {
       return (a.value - b.value) * direction;
     });
@@ -108,6 +127,8 @@ document.querySelector("#togglesort").addEventListener("input", () => {
   let sorted;
   switch (sortValue) {
     case "artist":
+      sorted = myTrackList.sortAlphabet("artistName");
+      myTrackList.modViewData(sorted);
       break;
     case "price-asc":
       sorted = myTrackList.sortPricing(1);
