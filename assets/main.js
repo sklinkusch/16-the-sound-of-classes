@@ -31,7 +31,7 @@ class TrackList {
       <img src="${track.artworkUrl100}" />
       <div>${track.trackName}</div>
       <div>${track.artistName}</div>
-      <div>${track.price}</div>
+      <div>${track.trackPrice}</div>
       </div>
       `;
       })
