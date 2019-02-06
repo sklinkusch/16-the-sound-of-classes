@@ -1,5 +1,11 @@
 // const tracksEl = document.querySelector('.tracks')
-
+const sortItems = [
+  { short: "", long: "Please select" },
+  { short: "artist", long: "Artist" },
+  { short: "title", long: "Title" },
+  { short: "price-asc", long: "Price (ascending)" },
+  { short: "price-desc", long: "Price (descending)" }
+];
 class TrackList {
   // Creating our Class
   constructor(domSelector, data) {
@@ -12,7 +18,7 @@ class TrackList {
 
     // Show stuff
     this.render();
-    this.modViewData(this.sortPricing());
+    //this.modViewData(this.sortPricing());
   }
 
   modViewData(newData) {
@@ -63,9 +69,31 @@ class TrackList {
     // Adding data in to our view !Order Matters!
     output += header;
     output += "<p>Data from iTunes</p>";
+    const dropdown = new DropDown("togglesort", "togglesort");
+    const dropdownHTML = dropdown.buildIt(sortItems);
+    output += dropdownHTML;
     output += template;
     // Assinging view in to innerHTML of our domElement form the constructor
     this.container.innerHTML = output;
+  }
+}
+
+class DropDown {
+  constructor(name, id) {
+    // this.container = document.querySelector(domSelector);
+    this.name = name;
+    this.id = id;
+  }
+  buildIt(options) {
+    return (
+      `<select name="${this.name}" id="${this.id}">` +
+      options
+        .map(option => {
+          return `<option value="${option.short}">${option.long}</option>`;
+        })
+        .join("") +
+      `</select>`
+    );
   }
 }
 
