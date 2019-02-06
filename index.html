@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Sound of silence</title>
-    <link rel="stylesheet" href="./assets/style.css" />
-  </head>
-  <body>
-    <select id="togglesort" name="togglesort">
-      <option value="all">Please select</option>
-      <option value="artist">Artist</option>
-      <option value="title">Title</option>
-      <option value="price-asc">Price (ascending)</option>
-      <option value="price-desc">Price (descending)</option>
-    </select>
-    <input type="text" id="filter" placeholder="Enter your search string" />
-    <div id="tracks"></div>
-    <script src="./assets/music.js"></script>
-    <script src="./assets/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Sound of silence</title>
+  <link rel="stylesheet" href="./assets/style.css" />
+</head>
+
+<body>
+  <select id="togglesort" name="togglesort">
+    <option value="all">Sort by</option>
+    <option value="artist">Artist</option>
+    <option value="title">Title</option>
+    <option value="price-asc">Price (ascending)</option>
+    <option value="price-desc">Price (descending)</option>
+  </select>
+  <input type="text" id="filter" placeholder="Enter your search string" />
+  <div id="tracks"></div>
+  <script src="./assets/music.js"></script>
+  <script src="./assets/main.js"></script>
+</body>
+
 </html>
