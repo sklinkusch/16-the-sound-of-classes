@@ -14,6 +14,20 @@ class TrackList {
     // this.modViewData(this.sortPricing());
   }
 
+  filterArray(filterValue, filterProperty) {
+    return this.data.filter(track => {
+      if (filterProperty == "all") {
+        if (track.trackName.includes(filterValue) || track.artistName.includes(filterValue)) {
+          return track;
+        }
+      } else {
+        if (track[filterProperty].includes(filterValue)) {
+          return track;
+        }
+      }
+    });
+  }
+
   modViewData(newData) {
     this.viewData = newData;
     this.render();
@@ -39,8 +53,8 @@ class TrackList {
     return htmlString;
   }
 
-  sortAlphabet(property) {
-    let mapped = this.data.map((track, index) => {
+  sortAlphabet(property, direction) {
+    let mapped = this.viewData.map((track, index) => {
       return { index: index, value: track[property] };
     });
     let nameA, nameB;
@@ -48,28 +62,28 @@ class TrackList {
       nameA = a.value.toUpperCase();
       nameB = b.value.toUpperCase();
       if (nameA < nameB) {
-        return -1;
+        return (-1 * direction);
       } else if (nameA > nameB) {
-        return 1;
+        return (1 * direction);
       }
       return 0;
     });
     const sortedTracks = mapped.map(tracknr => {
-      return this.data[tracknr.index];
+      return this.viewData[tracknr.index];
     });
     return sortedTracks;
   }
 
   sortPricing(direction) {
     // TODO: Create a Methode to sort by pricing
-    let mapped = this.data.map((track, index) => {
+    let mapped = this.viewData.map((track, index) => {
       return { index: index, value: track.trackPrice };
     });
     mapped.sort((a, b) => {
       return (a.value - b.value) * direction;
     });
     const sortedTracks = mapped.map(tracknr => {
-      return this.data[tracknr.index];
+      return this.viewData[tracknr.index];
     });
     return sortedTracks;
   }
@@ -96,12 +110,20 @@ document.querySelector("#togglesort").addEventListener("input", () => {
   const sortValue = document.querySelector("#togglesort").value;
   let sorted;
   switch (sortValue) {
-    case "artist":
-      sorted = myTrackList.sortAlphabet("artistName");
+    case "artist-asc":
+      sorted = myTrackList.sortAlphabet("artistName", 1);
       myTrackList.modViewData(sorted);
       break;
-    case "title":
-      sorted = myTrackList.sortAlphabet("trackName");
+    case "artist-desc":
+      sorted = myTrackList.sortAlphabet("artistName", -1);
+      myTrackList.modViewData(sorted);
+      break;
+    case "title-asc":
+      sorted = myTrackList.sortAlphabet("trackName", 1);
+      myTrackList.modViewData(sorted);
+      break;
+    case "title-desc":
+      sorted = myTrackList.sortAlphabet("trackName", -1);
       myTrackList.modViewData(sorted);
       break;
     case "price-asc":
@@ -116,7 +138,15 @@ document.querySelector("#togglesort").addEventListener("input", () => {
       myTrackList.modViewData(myTrackList.data);
   }
 });
+document.querySelector("#togglefilter").addEventListener("input", () => {
+  filterValue = document.querySelector("#filter").value;
+  filterProperty = document.querySelector("#togglefilter").value;
+  filtered = myTrackList.filterArray(filterValue, filterProperty);
+  myTrackList.modViewData(filtered);
+});
 document.querySelector("#filter").addEventListener("input", () => {
-  filterValue = document.querySelector("#search").value;
-  showTable(filterValue);
+  filterValue = document.querySelector("#filter").value;
+  filterProperty = document.querySelector("#togglefilter").value;
+  filtered = myTrackList.filterArray(filterValue, filterProperty);
+  myTrackList.modViewData(filtered);
 });
