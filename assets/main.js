@@ -45,8 +45,6 @@ class TrackList {
     const sortedData = this.data.sort((a, b) => {
       if (a.trackPrice < b.trackPrice) {
         return -1;
-      } else if (a.trackPrice === b.trackPrice) {
-        return 0;
       } else {
         return 1;
       }
