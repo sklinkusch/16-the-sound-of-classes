@@ -1,0 +1,12 @@
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.row > * {
+  flex: 1;
+}
+
+.row > img {
+  width: auto;
+}
