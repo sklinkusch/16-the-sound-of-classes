@@ -7,6 +7,10 @@ body {
   background-color: #666;
   color: white;
 }
+header, main {
+  width: 85%;
+  margin: 15px auto;
+}
 .row {
   display: flex;
   flex-direction: row;
