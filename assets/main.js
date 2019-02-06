@@ -46,6 +46,8 @@ class TrackList {
     return htmlString;
   }
 
+  sortAlphabet() {}
+
   sortPricing(direction) {
     // TODO: Create a Methode to sort by pricing
     let mapped = music.map((track, index) => {
@@ -53,25 +55,11 @@ class TrackList {
     });
     let val;
     mapped.sort((a, b) => {
-      if (a.value > b.value) {
-        val = 1 * direction;
-        return val;
-      } else if (a.value < b.value) {
-        val = -1 * direction;
-        return val;
-      }
-      return 0;
+      return (a.value - b.value) * direction;
     });
     const sortedTracks = mapped.map(tracknr => {
       return music[tracknr.index];
     });
-    // const sortedData = this.data.sort((a, b) => {
-    //   if (a.trackPrice < b.trackPrice) {
-    //     return -1;
-    //   } else {
-    //     return 1;
-    //   }
-    // });
     return sortedTracks;
   }
 
@@ -119,6 +107,8 @@ document.querySelector("#togglesort").addEventListener("input", () => {
   const sortValue = document.querySelector("#togglesort").value;
   let sorted;
   switch (sortValue) {
+    case "artist":
+      break;
     case "price-asc":
       sorted = myTrackList.sortPricing(1);
       myTrackList.modViewData(sorted);
