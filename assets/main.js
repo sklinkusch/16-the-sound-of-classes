@@ -18,7 +18,7 @@ class TrackList {
 
     // Show stuff
     this.render();
-    //this.modViewData(this.sortPricing());
+    // this.modViewData(this.sortPricing());
   }
 
   modViewData(newData) {
@@ -46,20 +46,25 @@ class TrackList {
     return htmlString;
   }
 
-  sortPricing() {
+  sortPricing(direction) {
     // TODO: Create a Methode to sort by pricing
-    let mapped = this.data.map((track, index) => {
-      return { index: index, value: track.price };
+    let mapped = music.map((track, index) => {
+      return { index: index, value: track.trackPrice };
     });
+    let val;
     mapped.sort((a, b) => {
       if (a.value > b.value) {
-        return 1;
+        val = 1 * direction;
+        return val;
       } else if (a.value < b.value) {
-        return -1;
+        val = -1 * direction;
+        return val;
       }
       return 0;
     });
-    const sortedTracks = mapped.map(tracknr => this.data[tracknr]);
+    const sortedTracks = mapped.map(tracknr => {
+      return music[tracknr.index];
+    });
     // const sortedData = this.data.sort((a, b) => {
     //   if (a.trackPrice < b.trackPrice) {
     //     return -1;
@@ -110,3 +115,19 @@ class DropDown {
 }
 
 const myTrackList = new TrackList("#tracks", music);
+document.querySelector("#togglesort").addEventListener("input", () => {
+  const sortValue = document.querySelector("#togglesort").value;
+  let sorted;
+  switch (sortValue) {
+    case "price-asc":
+      sorted = myTrackList.sortPricing(1);
+      myTrackList.modViewData(sorted);
+      break;
+    case "price-desc":
+      sorted = myTrackList.sortPricing(-1);
+      myTrackList.modViewData(sorted);
+      break;
+    default:
+      myTrackList.modViewData(myTrackList.data);
+  }
+});
