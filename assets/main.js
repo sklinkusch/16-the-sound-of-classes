@@ -40,10 +40,9 @@ class TrackList {
   }
 
   sortAlphabet(property) {
-    let mapped = music.map((track, index) => {
+    let mapped = this.data.map((track, index) => {
       return { index: index, value: track[property] };
     });
-    console.log(property);
     let nameA, nameB;
     mapped.sort((a, b) => {
       nameA = a.value.toUpperCase();
@@ -56,21 +55,21 @@ class TrackList {
       return 0;
     });
     const sortedTracks = mapped.map(tracknr => {
-      return music[tracknr.index];
+      return this.data[tracknr.index];
     });
     return sortedTracks;
   }
 
   sortPricing(direction) {
     // TODO: Create a Methode to sort by pricing
-    let mapped = music.map((track, index) => {
+    let mapped = this.data.map((track, index) => {
       return { index: index, value: track.trackPrice };
     });
     mapped.sort((a, b) => {
       return (a.value - b.value) * direction;
     });
     const sortedTracks = mapped.map(tracknr => {
-      return music[tracknr.index];
+      return this.data[tracknr.index];
     });
     return sortedTracks;
   }
@@ -99,6 +98,10 @@ document.querySelector("#togglesort").addEventListener("input", () => {
   switch (sortValue) {
     case "artist":
       sorted = myTrackList.sortAlphabet("artistName");
+      myTrackList.modViewData(sorted);
+      break;
+    case "title":
+      sorted = myTrackList.sortAlphabet("trackName");
       myTrackList.modViewData(sorted);
       break;
     case "price-asc":
