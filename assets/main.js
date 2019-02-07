@@ -53,8 +53,8 @@ class TrackList {
     return htmlString;
   }
 
-  sortAlphabet(property, direction) {
-    let mapped = this.viewData.map((track, index) => {
+  sortAlphabet(data, property, direction) {
+    let mapped = data.map((track, index) => {
       return { index: index, value: track[property] };
     });
     let nameA, nameB;
@@ -69,21 +69,21 @@ class TrackList {
       return 0;
     });
     const sortedTracks = mapped.map(tracknr => {
-      return this.viewData[tracknr.index];
+      return data[tracknr.index];
     });
     return sortedTracks;
   }
 
-  sortPricing(direction) {
+  sortPricing(data, direction) {
     // TODO: Create a Methode to sort by pricing
-    let mapped = this.viewData.map((track, index) => {
+    let mapped = data.map((track, index) => {
       return { index: index, value: track.trackPrice };
     });
     mapped.sort((a, b) => {
       return (a.value - b.value) * direction;
     });
     const sortedTracks = mapped.map(tracknr => {
-      return this.viewData[tracknr.index];
+      return data[tracknr.index];
     });
     return sortedTracks;
   }
@@ -103,50 +103,46 @@ class TrackList {
     // Assinging view in to innerHTML of our domElement form the constructor
     this.container.innerHTML = output;
   }
+
+  updateView(filterElement, filterToggler, sortToggler) {
+    const filterValue = document.querySelector(filterElement).value;
+    const filterProperty = document.querySelector(filterToggler).value;
+    const filtered = filterValue == "" || typeof filterValue == "undefined" ? myTrackList.data : myTrackList.filterArray(filterValue, filterProperty);
+    const sortValue = document.querySelector(sortToggler).value;
+    let sorted;
+    switch (sortValue) {
+      case "artist-asc":
+        sorted = myTrackList.sortAlphabet(filtered, "artistName", 1);
+        break;
+      case "artist-desc":
+        sorted = myTrackList.sortAlphabet(filtered, "artistName", -1);
+        break;
+      case "title-asc":
+        sorted = myTrackList.sortAlphabet(filtered, "trackName", 1);
+        break;
+      case "title-desc":
+        sorted = myTrackList.sortAlphabet(filtered, "trackName", -1);
+        break;
+      case "price-asc":
+        sorted = myTrackList.sortPricing(filtered, 1);
+        break;
+      case "price-desc":
+        sorted = myTrackList.sortPricing(filtered, -1);
+        break;
+      default:
+        sorted = filtered;
+    }
+    myTrackList.modViewData(sorted);
+  }
 }
 
 const myTrackList = new TrackList("#tracks", music);
 document.querySelector("#togglesort").addEventListener("input", () => {
-  const sortValue = document.querySelector("#togglesort").value;
-  let sorted;
-  switch (sortValue) {
-    case "artist-asc":
-      sorted = myTrackList.sortAlphabet("artistName", 1);
-      myTrackList.modViewData(sorted);
-      break;
-    case "artist-desc":
-      sorted = myTrackList.sortAlphabet("artistName", -1);
-      myTrackList.modViewData(sorted);
-      break;
-    case "title-asc":
-      sorted = myTrackList.sortAlphabet("trackName", 1);
-      myTrackList.modViewData(sorted);
-      break;
-    case "title-desc":
-      sorted = myTrackList.sortAlphabet("trackName", -1);
-      myTrackList.modViewData(sorted);
-      break;
-    case "price-asc":
-      sorted = myTrackList.sortPricing(1);
-      myTrackList.modViewData(sorted);
-      break;
-    case "price-desc":
-      sorted = myTrackList.sortPricing(-1);
-      myTrackList.modViewData(sorted);
-      break;
-    default:
-      myTrackList.modViewData(myTrackList.data);
-  }
+  myTrackList.updateView("#filter", "#togglefilter", "#togglesort");
 });
 document.querySelector("#togglefilter").addEventListener("input", () => {
-  filterValue = document.querySelector("#filter").value;
-  filterProperty = document.querySelector("#togglefilter").value;
-  filtered = myTrackList.filterArray(filterValue, filterProperty);
-  myTrackList.modViewData(filtered);
+  myTrackList.updateView("#filter", "#togglefilter", "#togglesort");
 });
 document.querySelector("#filter").addEventListener("input", () => {
-  filterValue = document.querySelector("#filter").value;
-  filterProperty = document.querySelector("#togglefilter").value;
-  filtered = myTrackList.filterArray(filterValue, filterProperty);
-  myTrackList.modViewData(filtered);
+  myTrackList.updateView("#filter", "#togglefilter", "#togglesort");
 });
