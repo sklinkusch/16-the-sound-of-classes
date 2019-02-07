@@ -107,32 +107,32 @@ class TrackList {
   updateView(filterElement, filterToggler, sortToggler) {
     const filterValue = document.querySelector(filterElement).value;
     const filterProperty = document.querySelector(filterToggler).value;
-    const filtered = filterValue == "" || typeof filterValue == "undefined" ? myTrackList.data : myTrackList.filterArray(filterValue, filterProperty);
+    const filtered = filterValue == "" || typeof filterValue == "undefined" ? this.data : this.filterArray(filterValue, filterProperty);
     const sortValue = document.querySelector(sortToggler).value;
     let sorted;
     switch (sortValue) {
       case "artist-asc":
-        sorted = myTrackList.sortAlphabet(filtered, "artistName", 1);
+        sorted = this.sortAlphabet(filtered, "artistName", 1);
         break;
       case "artist-desc":
-        sorted = myTrackList.sortAlphabet(filtered, "artistName", -1);
+        sorted = this.sortAlphabet(filtered, "artistName", -1);
         break;
       case "title-asc":
-        sorted = myTrackList.sortAlphabet(filtered, "trackName", 1);
+        sorted = this.sortAlphabet(filtered, "trackName", 1);
         break;
       case "title-desc":
-        sorted = myTrackList.sortAlphabet(filtered, "trackName", -1);
+        sorted = this.sortAlphabet(filtered, "trackName", -1);
         break;
       case "price-asc":
-        sorted = myTrackList.sortPricing(filtered, 1);
+        sorted = this.sortPricing(filtered, 1);
         break;
       case "price-desc":
-        sorted = myTrackList.sortPricing(filtered, -1);
+        sorted = this.sortPricing(filtered, -1);
         break;
       default:
         sorted = filtered;
     }
-    myTrackList.modViewData(sorted);
+    this.modViewData(sorted);
   }
 }
 
