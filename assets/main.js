@@ -168,7 +168,9 @@ document.querySelector("#filter").addEventListener("input", () => {
 });
 function Pause_Title(number) {
   let audioplayer = document.querySelector(`#musicplay_${number}`);
-  audioplayer.pause();
+  if (audioplayer.duration > 0 && !audioplayer.paused) {
+    audioplayer.pause();
+  }
 }
 
 function Play_Title(number) {
