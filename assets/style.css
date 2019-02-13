@@ -29,3 +29,10 @@ main {
   width: auto;
   flex: 0 0 100px;
 }
+
+.row > span {
+  flex: 0 0 15px;
+}
+.row > audio {
+  flex: 0 0 0;
+}

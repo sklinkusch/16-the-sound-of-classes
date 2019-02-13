@@ -17,7 +17,10 @@ class TrackList {
   filterArray(filterValue, filterProperty) {
     return this.data.filter(track => {
       if (filterProperty == "all") {
-        if (track.trackName.includes(filterValue) || track.artistName.includes(filterValue)) {
+        if (
+          track.trackName.includes(filterValue) ||
+          track.artistName.includes(filterValue)
+        ) {
           return track;
         }
       } else {
@@ -39,18 +42,42 @@ class TrackList {
     // from datatype string
     // TODO: create a template function
     const htmlString = music
-      .map(track => {
+      .map((track, index) => {
+        const {
+          previewUrl,
+          artworkUrl100,
+          trackName,
+          artistName,
+          trackPrice
+        } = track;
         return `
       <div class="row">
-      <img src="${track.artworkUrl100}" />
-      <div>${track.trackName}</div>
-      <div>${track.artistName}</div>
-      <div>${track.trackPrice} $</div>
+      <span class="fas fa-play" onclick="Play_Title(${index})">&nbsp;</span>
+      <span class="fas fa-pause" onclick="Pause_Title(${index})">&nbsp;</span>
+      <audio id="musicplay_${index}" loop><source="${previewUrl}"></audio>
+      <img src="${artworkUrl100}" />
+      <div>${trackName}</div>
+      <div>${artistName}</div>
+      <div>${trackPrice} $</div>
       </div>
       `;
       })
       .join("");
     return htmlString;
+  }
+
+  Pause_Title(number){
+    let audioplayer = document.querySelector(`#musicplay_${number}`);
+    audioplayer.pause();
+  }
+
+  Play_Title(number){
+    let audioplayer = document.querySelector(`#musicplay_${number}`);
+    let all_players = document.querySelectorAll('audio');
+    for (let element of ...all_players){
+      element.pause();
+    }
+    audioplayer.play();
   }
 
   sortAlphabet(data, property, direction) {
@@ -62,9 +89,9 @@ class TrackList {
       nameA = a.value.toUpperCase();
       nameB = b.value.toUpperCase();
       if (nameA < nameB) {
-        return (-1 * direction);
+        return -1 * direction;
       } else if (nameA > nameB) {
-        return (1 * direction);
+        return 1 * direction;
       }
       return 0;
     });
@@ -107,7 +134,10 @@ class TrackList {
   updateView(filterElement, filterToggler, sortToggler) {
     const filterValue = document.querySelector(filterElement).value;
     const filterProperty = document.querySelector(filterToggler).value;
-    const filtered = filterValue == "" || typeof filterValue == "undefined" ? this.data : this.filterArray(filterValue, filterProperty);
+    const filtered =
+      filterValue == "" || typeof filterValue == "undefined"
+        ? this.data
+        : this.filterArray(filterValue, filterProperty);
     const sortValue = document.querySelector(sortToggler).value;
     let sorted;
     switch (sortValue) {
