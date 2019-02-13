@@ -36,6 +36,22 @@ class TrackList {
     this.render();
   }
 
+  // Pause_Title(number) {
+  //   console.log(`pause title is called with no. ${number}`);
+  //   let audioplayer = document.querySelector(`#musicplay_${number}`);
+  //   audioplayer.pause();
+  // }
+
+  // Play_Title(number) {
+  //   console.log(`play title is called with no. ${number}`);
+  //   let audioplayer = document.querySelector(`#musicplay_${number}`);
+  //   let all_players = document.querySelectorAll("audio");
+  //   for (let element of all_players) {
+  //     element.pause();
+  //   }
+  //   audioplayer.play();
+  // }
+
   template(music) {
     // Mapping over data and returning HTML String
     // For now we just assume that all data is there and that it is
@@ -52,8 +68,8 @@ class TrackList {
         } = track;
         return `
       <div class="row">
-      <span class="fas fa-play" onclick="Play_Title(${index})">&nbsp;</span>
-      <span class="fas fa-pause" onclick="Pause_Title(${index})">&nbsp;</span>
+      <span class="fas fa-play" onclick="Play_Title(${index});">&nbsp;</span>
+      <span class="fas fa-pause" onclick="Pause_Title(${index});">&nbsp;</span>
       <audio id="musicplay_${index}" loop><source="${previewUrl}"></audio>
       <img src="${artworkUrl100}" />
       <div>${trackName}</div>
@@ -64,20 +80,6 @@ class TrackList {
       })
       .join("");
     return htmlString;
-  }
-
-  Pause_Title(number){
-    let audioplayer = document.querySelector(`#musicplay_${number}`);
-    audioplayer.pause();
-  }
-
-  Play_Title(number){
-    let audioplayer = document.querySelector(`#musicplay_${number}`);
-    let all_players = document.querySelectorAll('audio');
-    for (let element of ...all_players){
-      element.pause();
-    }
-    audioplayer.play();
   }
 
   sortAlphabet(data, property, direction) {
@@ -176,3 +178,18 @@ document.querySelector("#togglefilter").addEventListener("input", () => {
 document.querySelector("#filter").addEventListener("input", () => {
   myTrackList.updateView("#filter", "#togglefilter", "#togglesort");
 });
+function Pause_Title(number) {
+  console.log(`pause title is called with no. ${number}`);
+  let audioplayer = document.querySelector(`#musicplay_${number}`);
+  audioplayer.pause();
+}
+
+function Play_Title(number) {
+  let audioplayer = document.querySelector(`#musicplay_${number}`);
+  console.log(audioplayer);
+  let all_players = document.querySelectorAll("audio");
+  for (let element of all_players) {
+    element.pause();
+  }
+  audioplayer.play();
+}
