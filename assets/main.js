@@ -18,13 +18,17 @@ class TrackList {
     return this.data.filter(track => {
       if (filterProperty == "all") {
         if (
-          track.trackName.includes(filterValue) ||
-          track.artistName.includes(filterValue)
+          track.trackName.toLowerCase().includes(filterValue.toLowerCase()) ||
+          track.artistName.toLowerCase().includes(filterValue.toLowerCase())
         ) {
           return track;
         }
       } else {
-        if (track[filterProperty].includes(filterValue)) {
+        if (
+          track[filterProperty]
+            .toLowerCase()
+            .includes(filterValue.toLowerCase())
+        ) {
           return track;
         }
       }
@@ -35,22 +39,6 @@ class TrackList {
     this.viewData = newData;
     this.render();
   }
-
-  // Pause_Title(number) {
-  //   console.log(`pause title is called with no. ${number}`);
-  //   let audioplayer = document.querySelector(`#musicplay_${number}`);
-  //   audioplayer.pause();
-  // }
-
-  // Play_Title(number) {
-  //   console.log(`play title is called with no. ${number}`);
-  //   let audioplayer = document.querySelector(`#musicplay_${number}`);
-  //   let all_players = document.querySelectorAll("audio");
-  //   for (let element of all_players) {
-  //     element.pause();
-  //   }
-  //   audioplayer.play();
-  // }
 
   template(music) {
     // Mapping over data and returning HTML String
@@ -70,7 +58,7 @@ class TrackList {
       <div class="row">
       <span class="fas fa-play" onclick="Play_Title(${index});">&nbsp;</span>
       <span class="fas fa-pause" onclick="Pause_Title(${index});">&nbsp;</span>
-      <audio id="musicplay_${index}" loop><source="${previewUrl}"></audio>
+      <audio id="musicplay_${index}" loop src="${previewUrl}"></audio>
       <img src="${artworkUrl100}" />
       <div>${trackName}</div>
       <div>${artistName}</div>
@@ -179,17 +167,18 @@ document.querySelector("#filter").addEventListener("input", () => {
   myTrackList.updateView("#filter", "#togglefilter", "#togglesort");
 });
 function Pause_Title(number) {
-  console.log(`pause title is called with no. ${number}`);
   let audioplayer = document.querySelector(`#musicplay_${number}`);
   audioplayer.pause();
 }
 
 function Play_Title(number) {
-  let audioplayer = document.querySelector(`#musicplay_${number}`);
-  console.log(audioplayer);
+  let id = `#musicplay_${number}`;
+  let audioplayer = document.querySelector(id);
   let all_players = document.querySelectorAll("audio");
   for (let element of all_players) {
-    element.pause();
+    if (element.duration > 0 && !element.paused) {
+      element.pause();
+    }
   }
   audioplayer.play();
 }
