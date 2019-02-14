@@ -11,9 +11,20 @@ class TrackList {
 
     // Show stuff
     this.render();
-    // this.modViewData(this.sortPricing());
+    this.addEventListeners();
   }
 
+  addEventListeners() {
+    document.querySelector("#togglesort").addEventListener("input", () => {
+      myTrackList.updateView("#filter", "#togglefilter", "#togglesort");
+    });
+    document.querySelector("#togglefilter").addEventListener("input", () => {
+      myTrackList.updateView("#filter", "#togglefilter", "#togglesort");
+    });
+    document.querySelector("#filter").addEventListener("input", () => {
+      myTrackList.updateView("#filter", "#togglefilter", "#togglesort");
+    });
+  }
   filterArray(filterValue, filterProperty) {
     return this.data.filter(track => {
       if (filterProperty == "all") {
@@ -157,15 +168,7 @@ class TrackList {
 }
 
 const myTrackList = new TrackList("#tracks", music);
-document.querySelector("#togglesort").addEventListener("input", () => {
-  myTrackList.updateView("#filter", "#togglefilter", "#togglesort");
-});
-document.querySelector("#togglefilter").addEventListener("input", () => {
-  myTrackList.updateView("#filter", "#togglefilter", "#togglesort");
-});
-document.querySelector("#filter").addEventListener("input", () => {
-  myTrackList.updateView("#filter", "#togglefilter", "#togglesort");
-});
+
 function Pause_Title(number) {
   let audioplayer = document.querySelector(`#musicplay_${number}`);
   if (audioplayer.duration > 0 && !audioplayer.paused) {
