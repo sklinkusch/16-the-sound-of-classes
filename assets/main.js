@@ -63,12 +63,13 @@ class TrackList {
           artworkUrl100,
           trackName,
           artistName,
-          trackPrice
+          trackPrice,
+          trackId,
         } = track
         return `
       <div class="row">
-      <span class="fas fa-play" onclick="Play_Title(${index});">&nbsp;</span>
-      <span class="fas fa-pause" onclick="Pause_Title(${index});">&nbsp;</span>
+      <span class="fas fa-play" id="play_${trackId}" onclick="Play_Title(${trackId});">&nbsp;</span>
+      <span class="fas fa-pause" id="pause_${trackId}" onclick="Pause_Title(${index});">&nbsp;</span>
       <audio id="musicplay_${index}" loop src="${previewUrl}"></audio>
       <img src="${artworkUrl100}" />
       <div>${trackName}</div>
