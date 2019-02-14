@@ -24,6 +24,30 @@ class TrackList {
     document.querySelector("#filter").addEventListener("input", () => {
       myTrackList.updateView("#filter", "#togglefilter", "#togglesort")
     })
+    this.data.forEach(track => {
+      const { trackId, previewUrl } = track
+      document.querySelector(`#play_${trackId}`).addEventListener("click", () => {
+        let player = document.querySelector(`#musicplay_${trackId}`)
+        player.src = previewUrl
+        let sounds = document.querySelectorAll("audio")
+        sounds.forEach(sound => {
+          if (sound.duration > 0 && !sound.paused) {
+            sound.pause()
+            sound.src = ""
+          }
+        })
+        player.play()
+      })
+      document.querySelector(`#pause_${trackId}`).addEventListener("click", () => {
+        let sounds = document.querySelectorAll("audio")
+        sounds.forEach(sound => {
+          if (sound.duration > 0 && !sound.paused) {
+            sound.pause()
+            sound.src = ""
+          }
+        })
+      })
+    })
   }
   filterArray(filterValue, filterProperty) {
     return this.data.filter(track => {
@@ -68,9 +92,9 @@ class TrackList {
         } = track
         return `
       <div class="row">
-      <span class="fas fa-play" id="play_${trackId}" onclick="Play_Title(${trackId});">&nbsp;</span>
-      <span class="fas fa-pause" id="pause_${trackId}" onclick="Pause_Title(${index});">&nbsp;</span>
-      <audio id="musicplay_${index}" loop src="${previewUrl}"></audio>
+      <span class="fas fa-play" id="play_${trackId}">&nbsp;</span>
+      <span class="fas fa-pause" id="pause_${trackId}">&nbsp;</span>
+      <audio id="musicplay_${trackId}" loop src="${previewUrl}"></audio>
       <img src="${artworkUrl100}" />
       <div>${trackName}</div>
       <div>${artistName}</div>
@@ -169,22 +193,3 @@ class TrackList {
 }
 
 const myTrackList = new TrackList("#tracks", music)
-
-function Pause_Title(number) {
-  let audioplayer = document.querySelector(`#musicplay_${number}`)
-  if (audioplayer.duration > 0 && !audioplayer.paused) {
-    audioplayer.pause()
-  }
-}
-
-function Play_Title(number) {
-  let id = `#musicplay_${number}`
-  let audioplayer = document.querySelector(id)
-  let all_players = document.querySelectorAll("audio")
-  for (let element of all_players) {
-    if (element.duration > 0 && !element.paused) {
-      element.pause()
-    }
-  }
-  audioplayer.play()
-}
