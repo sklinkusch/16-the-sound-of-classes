@@ -54,7 +54,8 @@ class TrackList {
       if (filterProperty == "all") {
         if (
           track.trackName.toLowerCase().includes(filterValue.toLowerCase()) ||
-          track.artistName.toLowerCase().includes(filterValue.toLowerCase())
+          track.artistName.toLowerCase().includes(filterValue.toLowerCase()) ||
+          track.collectionName.toLowerCase().includes(filterValue.toLowerCase())
         ) {
           return track
         }
