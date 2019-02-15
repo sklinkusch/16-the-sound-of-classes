@@ -131,14 +131,15 @@ class TrackList {
           currency
         } = track
         const songPrice = this.getSongPrice(trackPrice,currency)
+        const relDate = releaseDate.substr(0,10);
         return `
       <div class="row">
       <span class="fas fa-play" id="play_${trackId}">&nbsp;</span>
       <span class="fas fa-pause" id="pause_${trackId}">&nbsp;</span>
       <audio id="musicplay_${trackId}" loop src="${previewUrl}"></audio>
       <img src="${artworkUrl100}" />
-      <div>${trackName}</div>
-      <div>${artistName}</div>
+      <div>${trackName}<br><span class="small">${collectionName}</span></div>
+      <div>${artistName}<br><span class="small">${relDate}</span></div>
       <div>${songPrice}</div>
       </div>
       `
