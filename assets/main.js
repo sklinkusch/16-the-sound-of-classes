@@ -72,11 +72,7 @@ class TrackList {
   }
 
   getDate(rawDate) {
-    const shortenedRawDate = rawDate.substr(0, 10)
-    const day = shortenedRawDate.substr(8, 2)
-    const month = shortenedRawDate.substr(5, 2)
-    const year = shortenedRawDate.substr(0, 4)
-    return `${day}.${month}.${year}`
+    return `${(rawDate.substr(8, 2))}.${(rawDate.substr(5, 2))}.${(rawDate.substr(0, 4))}`
   }
   getSongPrice(rawPrice, rawCurrency) {
     if (rawPrice === -1) {
