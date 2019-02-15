@@ -70,6 +70,43 @@ class TrackList {
     })
   }
 
+  getSongPrice(rawPrice,rawCurrency){
+    if(rawPrice === -1){
+      return "Album only"
+    }
+    let currency = "";
+    switch(rawCurrency){
+      // US Dollar
+      case "USD":
+      currency = "$"
+      break
+      // Canadian Dollar
+      case "CAD":
+      currency = "C $"
+      break
+      // Australian Dollar
+      case "AUD":
+      currency = "A$"
+      break
+      // Euro
+      case "EUR":
+      currency = "€"
+      break
+      // Japanese Yen and Chinese Renminbi
+      case "JPY":
+      case "CNY":
+      currency = "¥"
+      break
+      // British Pound
+      case "GBP":
+      currency = "£"
+      break
+      default:
+      currency = rawCurrency
+    }
+    return `${(Number(rawPrice).toFixed(2))} ${currency}`
+  }
+
   modViewData(newData) {
     this.viewData = newData
     this.render()
@@ -89,7 +126,11 @@ class TrackList {
           artistName,
           trackPrice,
           trackId,
+          collectionName,
+          releaseDate,
+          currency
         } = track
+        const songPrice = this.getSongPrice(trackPrice,currency)
         return `
       <div class="row">
       <span class="fas fa-play" id="play_${trackId}">&nbsp;</span>
@@ -98,7 +139,7 @@ class TrackList {
       <img src="${artworkUrl100}" />
       <div>${trackName}</div>
       <div>${artistName}</div>
-      <div>${trackPrice} $</div>
+      <div>${songPrice}</div>
       </div>
       `
       })
