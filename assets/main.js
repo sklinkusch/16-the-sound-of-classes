@@ -90,7 +90,7 @@ class TrackList {
         break
       // Canadian Dollar
       case "CAD":
-        currency = "C $"
+        currency = "C$"
         break
       // Australian Dollar
       case "AUD":
@@ -138,8 +138,6 @@ class TrackList {
           releaseDate,
           currency
         } = track
-        const songPrice = this.getSongPrice(trackPrice, currency)
-        const relDate = releaseDate.substr(0, 10);
         return `
       <div class="row">
       <span class="fas fa-play" id="play_${trackId}">&nbsp;</span>
@@ -147,8 +145,8 @@ class TrackList {
       <audio id="musicplay_${trackId}" loop src="${previewUrl}"></audio>
       <img src="${artworkUrl100}" />
       <div>${trackName}<br><span class="small">${collectionName}</span></div>
-      <div>${artistName}<br><span class="small">${relDate}</span></div>
-      <div>${songPrice}</div>
+      <div>${artistName}<br><span class="small">${(this.getDate(releaseDate))}</span></div>
+      <div>${(this.getSongPrice(trackPrice, currency))}</div>
       </div>
       `
       })
