@@ -221,6 +221,18 @@ class TrackList {
       case "title-desc":
         sorted = this.sortAlphabet(filtered, "trackName", -1)
         break
+      case "album-asc":
+      sorted = this.sortAlphabet(filtered,"collectionName", 1)
+      break
+      case "album-desc":
+      sorted = this.sortAlphabet(filtered,"collectionName",-1)
+      break
+      case "relDate-asc":
+      sorted = this.sortAlphabet(filtered,"releaseDate", 1)
+      break
+      case "relDate-desc":
+      sorted = this.sortAlphabet(filtered,"releaseDate",-1)
+      break
       case "price-asc":
         sorted = this.sortPricing(filtered, 1)
         break
