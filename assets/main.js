@@ -71,39 +71,46 @@ class TrackList {
     })
   }
 
-  getSongPrice(rawPrice,rawCurrency){
-    if(rawPrice === -1){
+  getDate(rawDate) {
+    const shortenedRawDate = rawDate.substr(0, 10)
+    const day = shortenedRawDate.substr(8, 2)
+    const month = shortenedRawDate.substr(5, 2)
+    const year = shortenedRawDate.substr(0, 4)
+    return `${day}.${month}.${year}`
+  }
+  getSongPrice(rawPrice, rawCurrency) {
+    if (rawPrice === -1) {
       return "Album only"
     }
     let currency = "";
-    switch(rawCurrency){
+    switch (rawCurrency) {
       // US Dollar
       case "USD":
-      currency = "$"
-      break
+        currency = "$"
+        break
       // Canadian Dollar
       case "CAD":
-      currency = "C $"
-      break
+        currency = "C $"
+        break
       // Australian Dollar
       case "AUD":
-      currency = "A$"
-      break
+        currency = "A$"
+        break
       // Euro
       case "EUR":
-      currency = "€"
-      break
+        currency = "€"
+        break
       // Japanese Yen and Chinese Renminbi
       case "JPY":
       case "CNY":
-      currency = "¥"
-      break
+        currency = "¥"
+        break
       // British Pound
       case "GBP":
-      currency = "£"
-      break
+        currency = "£"
+        break
       default:
-      currency = rawCurrency
+        currency = rawCurrency
     }
     return `${(Number(rawPrice).toFixed(2))} ${currency}`
   }
@@ -131,8 +138,8 @@ class TrackList {
           releaseDate,
           currency
         } = track
-        const songPrice = this.getSongPrice(trackPrice,currency)
-        const relDate = releaseDate.substr(0,10);
+        const songPrice = this.getSongPrice(trackPrice, currency)
+        const relDate = releaseDate.substr(0, 10);
         return `
       <div class="row">
       <span class="fas fa-play" id="play_${trackId}">&nbsp;</span>
@@ -223,17 +230,17 @@ class TrackList {
         sorted = this.sortAlphabet(filtered, "trackName", -1)
         break
       case "album-asc":
-      sorted = this.sortAlphabet(filtered,"collectionName", 1)
-      break
+        sorted = this.sortAlphabet(filtered, "collectionName", 1)
+        break
       case "album-desc":
-      sorted = this.sortAlphabet(filtered,"collectionName",-1)
-      break
+        sorted = this.sortAlphabet(filtered, "collectionName", -1)
+        break
       case "relDate-asc":
-      sorted = this.sortAlphabet(filtered,"releaseDate", 1)
-      break
+        sorted = this.sortAlphabet(filtered, "releaseDate", 1)
+        break
       case "relDate-desc":
-      sorted = this.sortAlphabet(filtered,"releaseDate",-1)
-      break
+        sorted = this.sortAlphabet(filtered, "releaseDate", -1)
+        break
       case "price-asc":
         sorted = this.sortPricing(filtered, 1)
         break
