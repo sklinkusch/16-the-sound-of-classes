@@ -66,6 +66,11 @@ class TrackList {
       }
     })
   }
+
+  defaultTemplate() {
+    return `Search to see music`
+  }
+
   filterArray(filterValue, filterProperty) {
     return this.data.filter(track => {
       if (filterProperty == "all") {
@@ -91,6 +96,7 @@ class TrackList {
   getDate(rawDate) {
     return `${(rawDate.substr(8, 2))}.${(rawDate.substr(5, 2))}.${(rawDate.substr(0, 4))}`
   }
+
   getSongPrice(rawPrice, rawCurrency) {
     if (rawPrice === -1) {
       return "Album only"
@@ -133,41 +139,20 @@ class TrackList {
     this.render()
   }
 
-  defaultTemplate() {
-    return `Search to see music`
-  }
-  template(music) {
-    // Mapping over data and returning HTML String
-    // For now we just assume that all data is there and that it is
-    // from datatype string
-    // TODO: create a template function
-    const htmlString = music
-      .map((track, index) => {
-        const {
-          previewUrl,
-          artworkUrl100,
-          trackName,
-          artistName,
-          trackPrice,
-          trackId,
-          collectionName,
-          releaseDate,
-          currency
-        } = track
-        return `
-      <div class="row">
-      <span class="fas fa-play" id="play_${trackId}">&nbsp;</span>
-      <span class="fas fa-pause" id="pause_${trackId}">&nbsp;</span>
-      <audio id="musicplay_${trackId}" loop src=""></audio>
-      <img src="${artworkUrl100}" />
-      <div>${trackName}<br><span class="small">${collectionName}</span></div>
-      <div>${artistName}<br><span class="small">${(this.getDate(releaseDate))}</span></div>
-      <div>${(this.getSongPrice(trackPrice, currency))}</div>
-      </div>
-      `
-      })
-      .join("")
-    return htmlString
+  render() {
+    // Out put will hold the complete view
+    let output = ""
+
+    // Setting up data for our view
+    const header = "<h1>My Tracks</h1>"
+    // template methode accepts data to view and returns html string
+    const template = this.viewData ? this.template(this.viewData) : this.defaultTemplate()
+    // Adding data in to our view !Order Matters!
+    output += header
+    output += "<p>Data from iTunes</p>"
+    output += template
+    // Assinging view in to innerHTML of our domElement form the constructor
+    this.container.innerHTML = output
   }
 
   sortAlphabet(data, property, direction) {
@@ -205,20 +190,38 @@ class TrackList {
     return sortedTracks
   }
 
-  render() {
-    // Out put will hold the complete view
-    let output = ""
-
-    // Setting up data for our view
-    const header = "<h1>My Tracks</h1>"
-    // template methode accepts data to view and returns html string
-    const template = this.viewData ? this.template(this.viewData) : this.defaultTemplate()
-    // Adding data in to our view !Order Matters!
-    output += header
-    output += "<p>Data from iTunes</p>"
-    output += template
-    // Assinging view in to innerHTML of our domElement form the constructor
-    this.container.innerHTML = output
+  template(music) {
+    // Mapping over data and returning HTML String
+    // For now we just assume that all data is there and that it is
+    // from datatype string
+    // TODO: create a template function
+    const htmlString = music
+      .map((track, index) => {
+        const {
+          previewUrl,
+          artworkUrl100,
+          trackName,
+          artistName,
+          trackPrice,
+          trackId,
+          collectionName,
+          releaseDate,
+          currency
+        } = track
+        return `
+      <div class="row">
+      <span class="fas fa-play" id="play_${trackId}">&nbsp;</span>
+      <span class="fas fa-pause" id="pause_${trackId}">&nbsp;</span>
+      <audio id="musicplay_${trackId}" loop src=""></audio>
+      <img src="${artworkUrl100}" />
+      <div>${trackName}<br><span class="small">${collectionName}</span></div>
+      <div>${artistName}<br><span class="small">${(this.getDate(releaseDate))}</span></div>
+      <div>${(this.getSongPrice(trackPrice, currency))}</div>
+      </div>
+      `
+      })
+      .join("")
+    return htmlString
   }
 
   updateData(data) {
