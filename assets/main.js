@@ -51,6 +51,21 @@ class TrackList {
         })
       })
     }
+    document.querySelector("#searchbutton").addEventListener("click", () => {
+      let searchValue = document.querySelector("#searchfield").value
+      if (searchValue !== "" && typeof searchValue !== undefined) {
+        const urlSearchValue = searchValue.replace(" ", "%20")
+        const url = `https://dci-fbw12-search-itunes.now.sh/?term=${urlSearchValue}`
+        const req = new XMLHttpRequest()
+        req.open("GET", url, true)
+        req.responseType = "json"
+        req.onload = () => {
+          var jsonResponse = req.response
+          this.updateData(jsonResponse.results)
+        }
+        req.send(null)
+      }
+    })
   }
   filterArray(filterValue, filterProperty) {
     return this.data.filter(track => {
@@ -263,19 +278,3 @@ class TrackList {
 }
 
 const myTrackList = new TrackList("#tracks")
-
-document.querySelector("#searchbutton").addEventListener("click", () => {
-  let searchValue = document.querySelector("#searchfield").value
-  if (searchValue !== "" && typeof searchValue !== undefined) {
-    const urlSearchValue = searchValue.replace(" ", "%20")
-    const url = `https://dci-fbw12-search-itunes.now.sh/?term=${urlSearchValue}`
-    const req = new XMLHttpRequest()
-    req.open("GET", url, true)
-    req.responseType = "json"
-    req.onload = function () {
-      var jsonResponse = req.response
-      myTrackList.updateData(jsonResponse.results)
-    }
-    req.send(null)
-  }
-})
