@@ -1,13 +1,13 @@
 // const tracksEl = document.querySelector('.tracks')
 class TrackList {
   // Creating our Class
-  constructor(domSelector, data) {
+  constructor(domSelector) {
     // Getting a domelement
     this.container = document.querySelector(domSelector)
     // Store my data
-    this.data = data
+    this.data = null
     // Represents the currently displayed data
-    this.viewData = data
+    this.viewData = null
 
     // Show stuff
     this.render()
@@ -24,30 +24,33 @@ class TrackList {
     document.querySelector("#filter").addEventListener("input", () => {
       myTrackList.updateView("#filter", "#togglefilter", "#togglesort")
     })
-    this.data.forEach(track => {
-      const { trackId, previewUrl } = track
-      document.querySelector(`#play_${trackId}`).addEventListener("click", () => {
-        let player = document.querySelector(`#musicplay_${trackId}`)
-        player.src = previewUrl
-        let sounds = document.querySelectorAll("audio")
-        sounds.forEach(sound => {
-          if (sound.duration > 0 && !sound.paused) {
-            sound.pause()
-            sound.src = ""
-          }
+    if (this.data) {
+
+      this.data.forEach(track => {
+        const { trackId, previewUrl } = track
+        document.querySelector(`#play_${trackId}`).addEventListener("click", () => {
+          let player = document.querySelector(`#musicplay_${trackId}`)
+          player.src = previewUrl
+          let sounds = document.querySelectorAll("audio")
+          sounds.forEach(sound => {
+            if (sound.duration > 0 && !sound.paused) {
+              sound.pause()
+              sound.src = ""
+            }
+          })
+          player.play()
         })
-        player.play()
-      })
-      document.querySelector(`#pause_${trackId}`).addEventListener("click", () => {
-        let sounds = document.querySelectorAll("audio")
-        sounds.forEach(sound => {
-          if (sound.duration > 0 && !sound.paused) {
-            sound.pause()
-            sound.src = ""
-          }
+        document.querySelector(`#pause_${trackId}`).addEventListener("click", () => {
+          let sounds = document.querySelectorAll("audio")
+          sounds.forEach(sound => {
+            if (sound.duration > 0 && !sound.paused) {
+              sound.pause()
+              sound.src = ""
+            }
+          })
         })
       })
-    })
+    }
   }
   filterArray(filterValue, filterProperty) {
     return this.data.filter(track => {
@@ -116,6 +119,9 @@ class TrackList {
     this.render()
   }
 
+  defaultTemplate() {
+    return `Search to see music`
+  }
   template(music) {
     // Mapping over data and returning HTML String
     // For now we just assume that all data is there and that it is
@@ -192,13 +198,21 @@ class TrackList {
     // Setting up data for our view
     const header = "<h1>My Tracks</h1>"
     // template methode accepts data to view and returns html string
-    const template = this.template(this.viewData)
+    const template = this.viewData ? this.template(this.viewData) : this.defaultTemplate()
     // Adding data in to our view !Order Matters!
     output += header
     output += "<p>Data from iTunes</p>"
     output += template
     // Assinging view in to innerHTML of our domElement form the constructor
     this.container.innerHTML = output
+  }
+
+  updateData(data) {
+    // Store my data
+    this.data = data
+    // Represents the currently displayed data
+    this.viewData = data
+    this.render()
   }
 
   updateView(filterElement, filterToggler, sortToggler) {
@@ -248,4 +262,32 @@ class TrackList {
   }
 }
 
-const myTrackList = new TrackList("#tracks", music)
+const myTrackList = new TrackList("#tracks")
+
+document.querySelector("#searchbutton").addEventListener("click", () => {
+  let searchValue = document.querySelector("#searchfield").value
+  if (searchValue !== "" && typeof searchValue !== undefined) {
+    const urlSearchValue = searchValue.replace(" ", "%20")
+    const url = `https://dci-fbw12-search-itunes.now.sh/?term=${urlSearchValue}`
+    const req = new XMLHttpRequest()
+    req.open("GET", url, true)
+    req.responseType = "json"
+    req.onload = function () {
+      var jsonResponse = req.response
+      myTrackList.updateData(jsonResponse.results)
+    }
+    req.send(null)
+  }
+})
+
+// const url = "https://dci-fbw12-search-itunes.now.sh/?term=jack%20johnson"
+// const req = new XMLHttpRequest()
+// req.open("GET", url, true)
+// req.responseType = "json"
+// req.onload = function () {
+//   var jsonResponse = req.response
+//   console.log(jsonResponse.results)
+//   myTrackList.updateData(jsonResponse.results)
+// }
+
+// req.send(null)
