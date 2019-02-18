@@ -279,15 +279,3 @@ document.querySelector("#searchbutton").addEventListener("click", () => {
     req.send(null)
   }
 })
-
-// const url = "https://dci-fbw12-search-itunes.now.sh/?term=jack%20johnson"
-// const req = new XMLHttpRequest()
-// req.open("GET", url, true)
-// req.responseType = "json"
-// req.onload = function () {
-//   var jsonResponse = req.response
-//   console.log(jsonResponse.results)
-//   myTrackList.updateData(jsonResponse.results)
-// }
-
-// req.send(null)
