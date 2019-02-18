@@ -25,7 +25,6 @@ class TrackList {
       myTrackList.updateView("#filter", "#togglefilter", "#togglesort")
     })
     if (this.data) {
-
       this.data.forEach(track => {
         const { trackId, previewUrl } = track
         document.querySelector(`#play_${trackId}`).addEventListener("click", () => {
@@ -159,7 +158,7 @@ class TrackList {
       <div class="row">
       <span class="fas fa-play" id="play_${trackId}">&nbsp;</span>
       <span class="fas fa-pause" id="pause_${trackId}">&nbsp;</span>
-      <audio id="musicplay_${trackId}" loop src="${previewUrl}"></audio>
+      <audio id="musicplay_${trackId}" loop src=""></audio>
       <img src="${artworkUrl100}" />
       <div>${trackName}<br><span class="small">${collectionName}</span></div>
       <div>${artistName}<br><span class="small">${(this.getDate(releaseDate))}</span></div>
@@ -228,6 +227,7 @@ class TrackList {
     // Represents the currently displayed data
     this.viewData = data
     this.render()
+    this.addEventListeners()
   }
 
   updateView(filterElement, filterToggler, sortToggler) {
