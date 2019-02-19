@@ -55,14 +55,22 @@ class TrackList {
       if (searchValue !== "" && typeof searchValue !== undefined) {
         const urlSearchValue = searchValue.replace(" ", "%20")
         const url = `https://dci-fbw12-search-itunes.now.sh/?term=${urlSearchValue}`
-        const req = new XMLHttpRequest()
-        req.open("GET", url, true)
-        req.responseType = "json"
-        req.onload = () => {
-          var jsonResponse = req.response
-          this.updateData(jsonResponse.results)
-        }
-        req.send(null)
+        // const req = new XMLHttpRequest()
+        // req.open("GET", url, true)
+        // req.responseType = "json"
+        // req.onload = () => {
+        //   var jsonResponse = req.response
+        //   this.updateData(jsonResponse.results)
+        // }
+        // req.send(null)
+        fetch(url)
+          .then(response => {
+            return response.json()
+          }).then((data) => {
+            this.updateData(data.results)
+          }).catch(function (err) {
+            console.log("Something went wrong")
+          })
       }
     })
   }
