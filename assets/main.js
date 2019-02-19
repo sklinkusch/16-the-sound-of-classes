@@ -157,7 +157,8 @@ class TrackList {
     const template = this.viewData ? this.template(this.viewData) : this.defaultTemplate()
     // Adding data in to our view !Order Matters!
     output += header
-    output += "<p>Data from iTunes</p>"
+    const numberOfTracks = this.viewData == null ? 0 : this.viewData.length
+    output += `<p>${numberOfTracks} music tracks from iTunes</p>`
     output += template
     // Assinging view in to innerHTML of our domElement form the constructor
     this.container.innerHTML = output
