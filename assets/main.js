@@ -54,7 +54,7 @@ class TrackList {
       let searchValue = document.querySelector("#searchfield").value
       if (searchValue !== "" && typeof searchValue !== undefined) {
         const urlSearchValue = searchValue.replace(" ", "%20")
-        const url = `https://dci-fbw12-search-itunes.now.sh/?term=${urlSearchValue}`
+        const url = `https://dci-fbw12-search-itunes.now.sh/?term=${urlSearchValue}&media=music`
         // const req = new XMLHttpRequest()
         // req.open("GET", url, true)
         // req.responseType = "json"
