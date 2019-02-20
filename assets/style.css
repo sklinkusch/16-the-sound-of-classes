@@ -18,7 +18,7 @@ main {
   align-items: center;
 }
 .row:hover {
-  background-color: #ccc;
+  background-color: #ffa5f0;
   color: black;
 }
 
