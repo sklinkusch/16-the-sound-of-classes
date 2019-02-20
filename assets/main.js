@@ -11,7 +11,7 @@ class TrackList {
 
     // Show stuff
     this.render()
-    this.addEventListeners()
+    //this.addEventListeners()
   }
 
   addEventListeners() {
@@ -24,8 +24,8 @@ class TrackList {
     document.querySelector("#filter").addEventListener("input", () => {
       myTrackList.updateView("#filter", "#togglefilter", "#togglesort")
     })
-    if (this.data) {
-      this.data.forEach(track => {
+    if (this.viewData) {
+      this.viewData.forEach(track => {
         const { trackId, previewUrl } = track
         document.querySelector(`#play_${trackId}`).addEventListener("click", () => {
           let player = document.querySelector(`#musicplay_${trackId}`)
@@ -179,7 +179,13 @@ class TrackList {
 
   sortAlphabet(data, property, direction) {
     let mapped = data.map((track, index) => {
-      return { index: index, value: track[property] }
+      let prop
+      if (track[property] == undefined) {
+        prop = ""
+      } else {
+        prop = track[property]
+      }
+      return { index: index, value: prop }
     })
     let nameA, nameB
     mapped.sort((a, b) => {
