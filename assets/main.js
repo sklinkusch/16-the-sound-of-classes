@@ -234,8 +234,8 @@ class TrackList {
         let collectionShortName;
         let artistShortName;
         if (trackName) {
-          if (trackName.length > 30) {
-            trackShortName = trackName.substr(0, 30) + "..."
+          if (trackName.length > 40) {
+            trackShortName = trackName.substr(0, 40) + "..."
           } else {
             trackShortName = trackName
           }
@@ -243,8 +243,8 @@ class TrackList {
           trackShortName = trackName
         }
         if (collectionName) {
-          if (collectionName.length > 30) {
-            collectionShortName = collectionName.substr(0, 30) + "..."
+          if (collectionName.length > 40) {
+            collectionShortName = collectionName.substr(0, 40) + "..."
           } else {
             collectionShortName = collectionName
           }
@@ -252,8 +252,8 @@ class TrackList {
           collectionShortName = collectionName
         }
         if (artistName) {
-          if (artistName.length > 30) {
-            artistShortName = artistName.substr(0, 30) + "..."
+          if (artistName.length > 40) {
+            artistShortName = artistName.substr(0, 40) + "..."
           } else {
             artistShortName = artistName
           }
