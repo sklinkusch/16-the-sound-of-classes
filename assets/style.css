@@ -44,4 +44,10 @@ main {
   img, .collection {
     display: none;
   }
+  .row {
+    flex-wrap: wrap;
+  }
+  .row > div {
+    flex: 0 0 100%;
+  }
 }
