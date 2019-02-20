@@ -217,14 +217,32 @@ class TrackList {
           releaseDate,
           currency
         } = track
+        let trackShortName;
+        let collectionShortName;
+        let artistShortName;
+        if (trackName.length > 30) {
+          trackShortName = trackName.substr(0, 30) + "..."
+        } else {
+          trackShortName = trackName
+        }
+        if (collectionName.length > 30) {
+          collectionShortName = collectionName.substr(0, 30) + "..."
+        } else {
+          collectionShortName = collectionName
+        }
+        if (artistName.length > 30) {
+          artistShortName = artistName.substr(0, 30) + "..."
+        } else {
+          artistShortName = artistName
+        }
         return `
       <div class="row">
       <span class="fas fa-play" id="play_${trackId}">&nbsp;</span>
       <span class="fas fa-pause" id="pause_${trackId}">&nbsp;</span>
       <audio id="musicplay_${trackId}" loop src=""></audio>
       <img src="${artworkUrl100}" />
-      <div>${trackName}<br><span class="small">${collectionName}</span></div>
-      <div>${artistName}<br><span class="small">${(this.getDate(releaseDate))}</span></div>
+      <div>${trackShortName}<br><span class="small collection">${collectionShortName}</span></div>
+      <div>${artistShortName}<br><span class="small reldate">${(this.getDate(releaseDate))}</span></div>
       <div>${(this.getSongPrice(trackPrice, currency))}</div>
       </div>
       `
