@@ -40,6 +40,14 @@ main {
 .small {
   font-size: 0.8em;
 }
+@media all and (max-width: 700px){
+  img {
+    display: none;
+  }
+  .row > div:last-child{
+    flex: 0 0 70px;
+  }
+}
 @media all and (max-width: 500px){
   img {
     display: none;
