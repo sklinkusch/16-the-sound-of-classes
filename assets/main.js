@@ -172,7 +172,7 @@ class TrackList {
       }).then((data) => {
         this.updateData(data.results)
       }).catch(function (err) {
-        console.log("Something went wrong")
+        console.log("Something went wrong" + err)
       })
     //   }
   }
@@ -233,18 +233,30 @@ class TrackList {
         let trackShortName;
         let collectionShortName;
         let artistShortName;
-        if (trackName.length > 30) {
-          trackShortName = trackName.substr(0, 30) + "..."
+        if (trackName) {
+          if (trackName.length > 30) {
+            trackShortName = trackName.substr(0, 30) + "..."
+          } else {
+            trackShortName = trackName
+          }
         } else {
           trackShortName = trackName
         }
-        if (collectionName.length > 30) {
-          collectionShortName = collectionName.substr(0, 30) + "..."
+        if (collectionName) {
+          if (collectionName.length > 30) {
+            collectionShortName = collectionName.substr(0, 30) + "..."
+          } else {
+            collectionShortName = collectionName
+          }
         } else {
           collectionShortName = collectionName
         }
-        if (artistName.length > 30) {
-          artistShortName = artistName.substr(0, 30) + "..."
+        if (artistName) {
+          if (artistName.length > 30) {
+            artistShortName = artistName.substr(0, 30) + "..."
+          } else {
+            artistShortName = artistName
+          }
         } else {
           artistShortName = artistName
         }
