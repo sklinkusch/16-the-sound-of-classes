@@ -127,6 +127,7 @@ class TrackList {
   modViewData(newData) {
     this.viewData = newData
     this.render()
+    this.addEventListeners()
   }
 
   render() {
