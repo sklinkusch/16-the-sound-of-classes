@@ -41,11 +41,12 @@ main {
   font-size: 0.8em;
 }
 @media all and (max-width: 500px){
-  img, .collection {
+  img {
     display: none;
   }
   .row {
     flex-wrap: wrap;
+    margin-bottom: 15px;
   }
   .row > div {
     flex: 0 0 100%;
