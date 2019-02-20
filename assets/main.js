@@ -52,26 +52,8 @@ class TrackList {
     }
     document.querySelector("#searchbutton").addEventListener("click", () => {
       let searchValue = document.querySelector("#searchfield").value
-      if (searchValue !== "" && typeof searchValue !== undefined) {
-        const urlSearchValue = searchValue.replace(" ", "%20")
-        const url = `https://dci-fbw12-search-itunes.now.sh/?term=${urlSearchValue}&media=music`
-        // const req = new XMLHttpRequest()
-        // req.open("GET", url, true)
-        // req.responseType = "json"
-        // req.onload = () => {
-        //   var jsonResponse = req.response
-        //   this.updateData(jsonResponse.results)
-        // }
-        // req.send(null)
-        fetch(url)
-          .then(response => {
-            return response.json()
-          }).then((data) => {
-            this.updateData(data.results)
-          }).catch(function (err) {
-            console.log("Something went wrong")
-          })
-      }
+      //if (searchValue !== "" && typeof searchValue !== undefined) {
+      this.searchItems(searchValue);
     })
   }
 
@@ -154,14 +136,44 @@ class TrackList {
     // Setting up data for our view
     const header = "<h1>My Tracks</h1>"
     // template methode accepts data to view and returns html string
-    const template = this.viewData ? this.template(this.viewData) : this.defaultTemplate()
+    let template
+    if (this.viewData) {
+      template = this.template(this.viewData)
+      output += header
+      const numberOfTracks = this.viewData == null ? 0 : this.viewData.length
+      output += `<p>${numberOfTracks} music tracks from iTunes</p>`
+      output += template
+      // Assinging view in to innerHTML of our domElement form the constructor
+      this.container.innerHTML = output
+    } else {
+      this.searchItems("Elvis Presley")
+    }
     // Adding data in to our view !Order Matters!
-    output += header
-    const numberOfTracks = this.viewData == null ? 0 : this.viewData.length
-    output += `<p>${numberOfTracks} music tracks from iTunes</p>`
-    output += template
-    // Assinging view in to innerHTML of our domElement form the constructor
-    this.container.innerHTML = output
+  }
+
+  searchItems(searchValue) {
+    if (typeof searchValue == undefined) {
+      searchValue = ""
+    }
+    const urlSearchValue = searchValue.replace(" ", "%20")
+    let url = `https://dci-fbw12-search-itunes.now.sh/?term=${urlSearchValue}&media=music`
+    // const req = new XMLHttpRequest()
+    // req.open("GET", url, true)
+    // req.responseType = "json"
+    // req.onload = () => {
+    //   var jsonResponse = req.response
+    //   this.updateData(jsonResponse.results)
+    // }
+    // req.send(null)
+    fetch(url)
+      .then(response => {
+        return response.json()
+      }).then((data) => {
+        this.updateData(data.results)
+      }).catch(function (err) {
+        console.log("Something went wrong")
+      })
+    //   }
   }
 
   sortAlphabet(data, property, direction) {
