@@ -37,6 +37,9 @@ main {
 .row > audio {
   flex: 0 0 0;
 }
+.row > div:last-child {
+  flex: 0 0 70px;
+}
 .small {
   font-size: 0.8em;
 }
