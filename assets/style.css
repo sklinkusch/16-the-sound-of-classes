@@ -40,3 +40,8 @@ main {
 .small {
   font-size: 0.8em;
 }
+@media all and (max-width: 500px){
+  img, .collection {
+    display: none;
+  }
+}
