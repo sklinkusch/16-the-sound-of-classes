@@ -52,8 +52,11 @@ class TrackList {
     }
     document.querySelector("#searchbutton").addEventListener("click", () => {
       let searchValue = document.querySelector("#searchfield").value
-      //if (searchValue !== "" && typeof searchValue !== undefined) {
-      this.searchItems(searchValue);
+      if (searchValue !== "" && typeof searchValue !== undefined) {
+        this.searchItems(searchValue);
+      } else {
+        this.searchItems("Elvis Presley")
+      }
     })
   }
 
@@ -153,9 +156,6 @@ class TrackList {
   }
 
   searchItems(searchValue) {
-    if (typeof searchValue == undefined) {
-      searchValue = ""
-    }
     const urlSearchValue = searchValue.replace(" ", "%20")
     let url = `https://dci-fbw12-search-itunes.now.sh/?term=${urlSearchValue}&media=music`
     // const req = new XMLHttpRequest()
