@@ -39,6 +39,7 @@ main {
 }
 .row > div:last-child {
   flex: 0 0 70px;
+  width: auto;
 }
 .small {
   font-size: 0.8em;
