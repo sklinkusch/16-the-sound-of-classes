@@ -46,7 +46,9 @@ main {
   }
   .row {
     flex-wrap: wrap;
-    margin-bottom: 15px;
+    border-bottom: 1px solid rgb(205,55,130);
+    margin-bottom: 5px;
+    padding: 5px;
   }
   .row > div {
     flex: 0 0 100%;
