@@ -10,8 +10,7 @@ class TrackList {
     this.viewData = null
 
     // Show stuff
-    this.render()
-    //this.addEventListeners()
+    this.searchHot()
   }
 
   addEventListeners() {
@@ -52,10 +51,10 @@ class TrackList {
     }
     document.querySelector("#searchbutton").addEventListener("click", () => {
       let searchValue = document.querySelector("#searchfield").value
-      if (searchValue !== "" && typeof searchValue !== undefined) {
-        this.searchItems(searchValue);
+      if (searchValue !== "") {
+        this.searchItems(searchValue)
       } else {
-        this.searchItems("Elvis Presley")
+        this.searchHot()
       }
     })
   }
@@ -149,10 +148,31 @@ class TrackList {
       output += template
       // Assinging view in to innerHTML of our domElement form the constructor
       this.container.innerHTML = output
-    } else {
-      this.searchItems("Elvis Presley")
     }
     // Adding data in to our view !Order Matters!
+  }
+
+  searchHot() {
+    /*console.log("searchHot called")
+    let url = "https://dci-fbw12-search-itunes-hot-tracks.now.sh/"
+    // const req = new XMLHttpRequest()
+    // req.open("GET", url, true)
+    // req.responseType = "json"
+    // req.onload = () => {
+    //   var jsonResponse = req.response
+    //   this.updateData(jsonResponse.results)
+    // }
+    // req.send(null)
+    fetch(url)
+      .then(response => {
+        return response.json()
+      }).then((data) => {
+        this.updateData(data.results)
+      }).catch(function (err) {
+        console.log("Something went wrong" + err)
+      })
+    //   }*/
+    this.searchItems("Elvis Presley")
   }
 
   searchItems(searchValue) {
