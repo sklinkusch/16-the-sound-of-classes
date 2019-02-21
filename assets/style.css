@@ -12,6 +12,9 @@ main {
   width: 85%;
   margin: 15px auto;
 }
+.trackNum {
+  margin-bottom: 20px;
+}
 .row {
   display: flex;
   flex-direction: row;
